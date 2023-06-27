@@ -9,7 +9,6 @@
  * @width: get width.
  * @precision: Precision specification
  * @size: Size specifier
- *
  * Return: 1 or 2;
  */
 int handle_print(const char *fmt, int *ind, va_list list, char buffer[],
@@ -31,6 +30,13 @@ int handle_print(const char *fmt, int *ind, va_list list, char buffer[],
 	{
 		if (fmt[*ind] == '\0')
 			return (-1);
+		else if (fmt[*ind] == '%' && fmt[*ind + 1] == 'r')
+		{
+			buffer[buff_ind++] = '%';
+			buffer[buff_ind++] = 'r';
+			*ind += 2;
+			printed_chars += 2;
+		}
 		unknow_len += write(1, "%%", 1);
 		if (fmt[*ind - 1] == ' ')
 			unknow_len += write(1, " ", 1);
@@ -48,4 +54,3 @@ int handle_print(const char *fmt, int *ind, va_list list, char buffer[],
 	}
 	return (printed_chars);
 }
-
